@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/src/tailwind.css" rel="stylesheet">
     <title>blog_cms</title>
   </head>
   <body class="bg-amber-50">
@@ -12,7 +13,7 @@
       <div class="h-20 flex  justify-between item-center">
          <!-- Logo -->
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-mono p-4 m-2">PUCC<br>BLOG</br></h1>
+                    <h1 class="text-2xl font-mono p-4 m-2">PUCC<br>BLOG</h1>
                 </div>
 
         <!---Right side navs-->
@@ -21,7 +22,7 @@
           <a href="#" class="text-sm">Our Story</a>
           <a href="#" class="text-sm">Membership</a>
           <a href="#" class="text-sm">Write</a>
-          <a href="#" class="text-sm">Sign In</a>
+          <a href="auth.html" class="text-sm">Sign In</a>
 
           <button class="w-24 h-10 bg-black text-white text-sm rounded-full">Get Started</button>
           
@@ -33,13 +34,10 @@
     <!-- middle style -->
     <header id="heroSection" class="border-b to-black">
         <div class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div class="max-w-xl">
+            <div class="max-w-xl space-y-10">
 
               <h1 class="text-5xl font-semibold">Discover stories, thinking, and expertise from writers</h1>
-              <br>
-                <p id ="typing-text"class="text-xl text-gray-900 mb-8">
-                  
-                </p>
+              <p id="typing-text" class="text-xl text-gray-900 mb-8"></p>
                 <button class="bg-black text-white px-10 py-3 rounded-full text-lg hover:bg-gray-800">
                     Start reading
                 </button>
@@ -98,10 +96,6 @@
     </div>
   </div>
 </footer>
-
-
-    
-
 
     <script type="module" src="/src/main.js"></script>
   </body>

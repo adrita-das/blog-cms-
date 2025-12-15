@@ -1,7 +1,5 @@
 import './tailwind.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+
 
  
 //type indicator in text
@@ -9,14 +7,10 @@ import { setupCounter } from './counter.js'
 const textElement = document.getElementById('typing-text');
 const text = 'Technology, Startup, LifeStyle';
 
-
-
 let index = 0;
 const speed = 50;
 const pauseTime = 2000;
-
   
-
 function typeWriter() {
   if(index < text.length){
 
@@ -37,4 +31,4 @@ function typeWriter() {
 
 typeWriter();
 
- 
+
