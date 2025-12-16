@@ -1,7 +1,5 @@
 import './tailwind.css'
 
-
- 
 //type indicator in text
 
 const textElement = document.getElementById('typing-text');

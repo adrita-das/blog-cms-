@@ -1,57 +1,32 @@
-
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://ovhwtqnktucsjidiwzjo.supabase.co'
-const supabaseKey = process.env.SUPABASE_KEY
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
 export const supabase = createClient(supabaseUrl, supabaseKey)
 
-//signup authentication function
-
 export async function signUp(email, password) {
-
-    const { data, error} = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
         email,
         password,
     });
-
-    return { data, error}
-    
+    return { data, error }
 }
 
-
-//signin function 
-
 export async function signIn(email, password) {
-
-    const { data, error} = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
     });
-
-    return { data, error}
-    
+    return { data, error }
 }
 
 export async function signOut() {
-
-    const {error} = await supabase.auth.signOut()
-
-    return {error}
-    
+    const { error } = await supabase.auth.signOut()
+    return { error }
 }
 
 export async function getUser() {
-
-    const {data: {user} } = await supabase.auth.getUser()
-
-    return {user}
-    
-}
-
-export async function isUserLoggedIn() {
-
-    const user = await getUser()
-
-    return !!user
-    
+    const { data: { user } } = await supabase.auth.getUser()
+    return user
 }
