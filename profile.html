@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/src/tailwind.css" rel="stylesheet" />
+      <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    rel="stylesheet"
+  />
+    <title>blog_cms</title>
+  </head>
+  <body class="bg-amber-50">
+   <nav class="border-b border-black sticky top-0 z-50">
+    <div class="h-20 flex justify-between items-center px-4">
+      <!-- Left Side: Logo + Dropdown -->
+      <div class="flex items-center gap-4">
+        <h1 class="text-2xl font-mono">PUCC<br>BLOG</h1>
+
+      
+      </div>
+
+      <!-- Right Side -->
+      <div class="flex items-center gap-4">
+        <div class="cursor-pointer">
+            <span class="font-light">Write</span>
+           <i class="fa-regular fa-pen-to-square text-xl"></i>
+        </div>
+        <button id="profileBtn" class="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+          <span id="userInitial" class="font-semibold"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

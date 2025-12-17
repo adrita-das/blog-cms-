@@ -1,4 +1,4 @@
-import { signIn , signUp } from "./supabase-config.js";
+import { signIn, signUp } from "./supabase-config.js";
 
 const signInBtn = document.getElementById('signInBtn');
 const signupBtn = document.getElementById('signUpBtn');
@@ -8,11 +8,8 @@ const signInError = document.getElementById('signInError');
 const signUpError = document.getElementById('signUpError');
 const signUpSuccess = document.getElementById('signUpSuccess');
 
-
-//handle toggle
-
+// Handle toggle between Sign In and Sign Up
 signInBtn.addEventListener('click', () => {
-
   // Show sign in form
   signInForm.classList.remove('hidden');
   signUpForm.classList.add('hidden');
@@ -39,7 +36,6 @@ signupBtn.addEventListener('click', () => {
 });
 
 // Sign Up Form Submit
-
 signUpForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -50,7 +46,9 @@ signUpForm.addEventListener('submit', async (e) => {
   signUpSuccess.classList.add('hidden');
 
   const createBtn = signUpForm.querySelector('button[type="submit"]');
-  alert('Creating Account');
+  const originalText = createBtn.textContent;
+  createBtn.textContent = 'Creating Account...';
+  createBtn.disabled = true;
 
   const { data, error } = await signUp(email, password);
 
@@ -60,17 +58,14 @@ signUpForm.addEventListener('submit', async (e) => {
     createBtn.textContent = originalText;
     createBtn.disabled = false;
   } else {
-    signUpSuccess.textContent = 'Account created successfully!';
+    signUpSuccess.textContent = 'Account created successfully! Redirecting...';
     signUpSuccess.classList.remove('hidden');
     signUpForm.reset();
     
-    createBtn.textContent = originalText;
-    createBtn.disabled = false;
-    
-    // Switch to sign in after 2 seconds
+    // Redirect to dashboard after successful signup
     setTimeout(() => {
-      signInBtn.click();
-    }, 2000);
+      window.location.href = 'profile.html';
+    }, 1500);
   }
 });
 
@@ -82,14 +77,35 @@ signInForm.addEventListener('submit', async (e) => {
   const password = document.getElementById('signInPassword').value;
 
   signInError.classList.add('hidden');
-  signUpSuccess.classList.add('hidden');
 
   const submitBtn = signInForm.querySelector('button[type="submit"]');
-  alert('Signing in...');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Signing in...';
+  submitBtn.disabled = true;
 
   const { data, error } = await signIn(email, password);
 
+  if (error) {
+    signInError.textContent = error.message;
+    signInError.classList.remove('hidden');
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  } else {
+    // Successful sign in - redirect to dashboard
+    window.location.href = 'profile.html';
+  }
 });
 
+// Check if user is already logged in
+async function checkExistingSession() {
+  const { supabase } = await import('./supabase-config.js');
+  const { data: { session } } = await supabase.auth.getSession();
+  
+  if (session) {
+    // User is already logged in, redirect to dashboard
+    window.location.href = 'profile.html';
+  }
+}
 
-
+// Run check when page loads
+checkExistingSession();

@@ -1,4 +1,5 @@
 import './tailwind.css'
+import  './supabase-config.js'
 
 //type indicator in text
 
