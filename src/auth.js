@@ -96,16 +96,3 @@ signInForm.addEventListener('submit', async (e) => {
   }
 });
 
-// Check if user is already logged in
-async function checkExistingSession() {
-  const { supabase } = await import('./supabase-config.js');
-  const { data: { session } } = await supabase.auth.getSession();
-  
-  if (session) {
-    // User is already logged in, redirect to dashboard
-    window.location.href = 'profile.html';
-  }
-}
-
-// Run check when page loads
-checkExistingSession();
