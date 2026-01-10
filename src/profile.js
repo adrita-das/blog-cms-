@@ -28,12 +28,12 @@ async function initProfile() {
     const user = await getUser();
     const userEmail = user.email;
 
-    if (!user) {
-      console.error("No user logged in");
-      // Redirect to signin if no user
-      window.location.href = "./auth.html";
-      return;
-    }
+    // if (!user) {
+    //   console.error("No user logged in");
+    //   // Redirect to signin if no user
+    //   window.location.href = "./auth.html";
+    //   return;
+    // }
 
     const profileBtn = document.getElementById("profileBtn");
     const userInitial = document.getElementById("userInitial");
@@ -50,7 +50,8 @@ async function initProfile() {
     usernameEl.textContent = "@" + userEmail.split("@")[0];
   } catch (error) {
     console.error("Error initializing profile:", error);
-    window.location.href = "./auth.html";
+    //window.location.href = "./auth.html";
+    //alert("Try Again");
   }
 }
 

@@ -8,7 +8,7 @@ const publishBtn = document.getElementById("publishBtn");
 const draftBtn = document.getElementById("draftBtn");
 const count = document.getElementById("char-count");
 
-//===handle cover images
+//===handle cover images===//
 let imageUrl = null;
 
 uploadCover.addEventListener("change", async (e) => {
@@ -96,13 +96,6 @@ export function getCoverImageUrl() {
   return imageUrl;
 }
 
-//=====Character count
-
-postContent.addEventListener("input", () => {
-  const count = postContent.value.length;
-  charCount.textContent = count.toLocaleString();
-});
-
 //===post function
 
 async function savePost(status = "draft") {
@@ -141,13 +134,13 @@ async function savePost(status = "draft") {
         : "Draft saved successfully!"
     );
 
-    window.location.href = " ";
+    window.location.href = "./stories.html";
   } catch(error) {
     console.error("Error saving post:", error);
     alert(error.message || "Failed to save post. Please try again.");
 
     // Reset button
-    const btn = status === "published" ? publishBtn : saveDraftBtn;
+    const btn = status === "published" ? publishBtn : draftBtn;
     btn.disabled = false;
     btn.textContent = status === "published" ? "Publish" : "Save Draft";
 
@@ -155,16 +148,16 @@ async function savePost(status = "draft") {
 }
 
 
-publishBtn.addEventListener("click", () => savePost("published"));
-draftBtn.addEventListener("click", () => savePost("draft"));
+ publishBtn.addEventListener("click", () => savePost("published"));
+ draftBtn.addEventListener("click", () => savePost("draft"));
 
-// Warn before leaving with unsaved changes
-window.addEventListener("beforeunload", (e) => {
-  const title = postTitle.value.trim();
-  const content = postContent.value.trim();
+// // Warn before leaving with unsaved changes
+// window.addEventListener("beforeunload", (e) => {
+//   const title = postTitle.value.trim();
+//   const content = postContent.value.trim();
 
-  if (title || content) {
-    e.preventDefault();
-    e.returnValue = "";
-  }
-});
+//   if (title || content) {
+//     e.preventDefault();
+//     e.returnValue = "";
+//   }
+// });

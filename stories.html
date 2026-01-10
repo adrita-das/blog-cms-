@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/src/tailwind.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <title>Stories - PUCC BLOG</title>
+  </head>
+  <body class="bg-amber-50">
+    <!-- Navigation -->
+    <nav class="border-b border-gray-200 sticky top-0 z-50">
+      <div
+        class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <h1 class="text-2xl font-mono p-4 m-2">PUCC<br />BLOG</h1>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <a
+            href="post.html"
+            class="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition"
+          >
+            <i class="fa-regular fa-pen-to-square text-lg"></i>
+            <span>Write</span>
+          </a>
+          <div class="relative">
+             <button
+              id="profileBtn"
+              class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold hover:opacity-90 transition"
+            >
+              <span id="userInitial"></span>
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Layout -->
+    <div class="flex">
+      <!-- Left Sidebar -->
+      <aside class="w-64 border-r border-gray-200 min-h-screen sticky top-16">
+        <div class="flex flex-col p-6 space-y-1">
+          <a
+            href="#"
+            class="w-full px-4 py-3 hover:bg-gray-50 rounded-lg flex items-center gap-3 text-gray-700"
+          >
+            <i class="fas fa-home w-5"></i>
+            <span class="font-medium">Home</span>
+          </a>
+
+          <a
+            href="#"
+            class="w-full px-4 py-3 hover:bg-gray-50 rounded-lg flex items-center gap-3 text-gray-700"
+          >
+            <i class="fas fa-bookmark w-5"></i>
+            <span class="font-medium">Library</span>
+          </a>
+
+          <a
+            href="#"
+            class="w-full px-4 py-3 hover:bg-gray-50 rounded-lg flex items-center gap-3 text-gray-700"
+          >
+            <i class="fas fa-user w-5"></i>
+            <span class="font-medium">Profile</span>
+          </a>
+
+          <a
+            href="#"
+            class="w-full px-4 py-3 rounded-lg flex items-center gap-3 text-gray-900"
+          >
+            <i class="fas fa-file-alt w-5"></i>
+            <span class="font-medium">Stories</span>
+          </a>
+
+          <a
+            href="#"
+            class="w-full px-4 py-3 hover:bg-gray-50 rounded-lg flex items-center gap-3 text-gray-700"
+          >
+            <i class="fas fa-chart-bar w-5"></i>
+            <span class="font-medium">Stats</span>
+          </a>
+
+          <div class="pt-6 pb-2">
+            <hr class="border-gray-200" />
+          </div>
+
+          <a
+            href="#"
+            class="w-full px-4 py-3 hover:bg-gray-50 rounded-lg flex items-center gap-3 text-gray-700"
+          >
+            <i class="fas fa-user-friends w-5"></i>
+            <span class="font-medium">Following</span>
+          </a>
+
+          <div class="pt-4">
+            <button class="w-full px-4 py-3 hover:bg-gray-50 rounded-lg flex items-start gap-3 text-gray-700">
+              <i class="fas fa-plus w-5 mt-1"></i>
+              <span class="font-medium text-left flex-1">Find writers and publications to follow.</span>
+            </button>
+            <button class="px-4 py-1 text-sm text-green-600 hover:text-green-700">
+              See suggestions
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="flex-1">
+        <div class="max-w-5xl mx-auto px-8 py-8">
+          <!-- Page Title -->
+          <h1 class="text-4xl font-bold mb-8">Stories</h1>
+
+          <!-- Tabs -->
+          <div class="flex gap-8 border-b border-gray-200 mb-8">
+            <button
+              class="tab-btn active pb-4 text-sm font-medium border-b-2 border-black"
+              data-status="draft"
+            >
+              Drafts <span id="draft-count" class="text-gray-500">0</span>
+            </button>
+            <button
+              class="tab-btn pb-4 text-sm font-medium text-gray-500 hover:text-gray-900"
+              data-status="published"
+            >
+              Published
+            </button>
+            <button
+              class="tab-btn pb-4 text-sm font-medium text-gray-500 hover:text-gray-900"
+              data-status="scheduled"
+            >
+              Scheduled
+            </button>
+            <button
+              class="tab-btn pb-4 text-sm font-medium text-gray-500 hover:text-gray-900"
+              data-status="unlisted"
+            >
+              Unlisted
+            </button>
+          </div>
+
+          <!-- Table Header -->
+          <div class="grid grid-cols-12 gap-4 pb-4 border-b border-gray-200 text-sm font-medium text-gray-500">
+            <div class="col-span-6">Latest</div>
+            <div class="col-span-3">Publication</div>
+            <div class="col-span-3">Status</div>
+          </div>
+
+          <!-- Posts List -->
+          <div id="posts-container" class="mt-4">
+            <!-- Sample Post Item -->
+            <div class="grid grid-cols-12 gap-4 py-6 border-b border-gray-200 hover:bg-gray-50 cursor-pointer">
+              <div class="col-span-6">
+                
+              </div>
+              <div class="col-span-3 flex items-center">
+                
+              </div>
+              <div class="col-span-3 flex items-center justify-between">
+                
+                <button class="text-gray-400 hover:text-gray-600">
+                  <i class="fas fa-ellipsis-h"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Empty State (initially hidden) -->
+            <div id="empty-state" class="text-center py-12 hidden">
+              <p class="text-gray-500">No stories found</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="/src/profile.js"></script>
+  </body>
+</html>
