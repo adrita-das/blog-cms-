@@ -106,6 +106,7 @@ export async function blogPost(postData) {
       .from("posts")
       .insert([
         {
+          author_id: user.id,
           title: postData.title.trim(),
           content: postData.content.trim(),
           cover_image: postData.coverImage || null,
@@ -195,7 +196,7 @@ export async function updateData(postId, postData) {
       content : postData.content.trim(),
       cover_image : postData.coverImage || null,
       status: postData.status || "draft",
-      updated_at:new Data().toISOString,
+      updated_at:new Date().toISOString(),
      })
      .eq("id" , postId)
      .select();

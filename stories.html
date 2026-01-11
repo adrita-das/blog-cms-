@@ -35,7 +35,6 @@
             >
               <span id="userInitial"></span>
             </button>
-
           </div>
 
         </div>
@@ -45,7 +44,7 @@
     <!-- Main Layout -->
     <div class="flex">
       <!-- Left Sidebar -->
-      <aside class="w-64 border-r border-gray-200 min-h-screen sticky top-16">
+      <aside class="w-64 border-r border-gray-200 h-full sticky top-16">
         <div class="flex flex-col p-6 space-y-1">
           <a
             href="#"
@@ -112,12 +111,12 @@
       </aside>
 
       <!-- Main Content Area -->
-      <main class="flex-1">
+      <main class="flex-1 h-screen">
         <div class="max-w-5xl mx-auto px-8 py-8">
-          <!-- Page Title -->
-          <h1 class="text-4xl font-bold mb-8">Stories</h1>
+          
+          <h1 class="text-4xl font-bold mb-8 sticky top-2">Stories</h1>
 
-          <!-- Tabs -->
+          
           <div class="flex gap-8 border-b border-gray-200 mb-8">
             <button
               class="tab-btn active pb-4 text-sm font-medium border-b-2 border-black"
@@ -145,16 +144,16 @@
             </button>
           </div>
 
-          <!-- Table Header -->
+          
           <div class="grid grid-cols-12 gap-4 pb-4 border-b border-gray-200 text-sm font-medium text-gray-500">
             <div class="col-span-6">Latest</div>
             <div class="col-span-3">Publication</div>
             <div class="col-span-3">Status</div>
           </div>
 
-          <!-- Posts List -->
+          
           <div id="posts-container" class="mt-4">
-            <!-- Sample Post Item -->
+            
             <div class="grid grid-cols-12 gap-4 py-6 border-b border-gray-200 hover:bg-gray-50 cursor-pointer">
               <div class="col-span-6">
                 
@@ -170,15 +169,17 @@
               </div>
             </div>
 
-            <!-- Empty State (initially hidden) -->
+            
             <div id="empty-state" class="text-center py-12 hidden">
               <p class="text-gray-500">No stories found</p>
             </div>
           </div>
         </div>
-      </main>
+      </main> 
     </div>
 
+    <script type="module" src="/src/stories.js"></script>
     <script type="module" src="/src/profile.js"></script>
+    
   </body>
 </html>

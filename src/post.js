@@ -6,7 +6,7 @@ const postTitle = document.getElementById("post-title");
 const postContent = document.getElementById("post-content");
 const publishBtn = document.getElementById("publishBtn");
 const draftBtn = document.getElementById("draftBtn");
-const count = document.getElementById("char-count");
+
 
 //===handle cover images===//
 let imageUrl = null;
@@ -117,7 +117,7 @@ async function savePost(status = "draft") {
     const btn = status === " Published " ? publishBtn : draftBtn;
     const text = btn.textContent;
     btn.disabled = true;
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Saving...';
+    btn.innerHTML = 'Saving...';
 
     const savedPost = await blogPost({
       title: title,
