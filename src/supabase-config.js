@@ -186,6 +186,7 @@ export async function deletePost(postId) {
  
 }
 
+
 export async function updateData(postId, postData) {
 
   try{ 

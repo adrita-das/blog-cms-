@@ -1,6 +1,5 @@
-import { supabase, getUserPosts, deletePost } from "./supabase-config.js";
+import { supabase, getUserPosts, deletePost, updateData} from "./supabase-config.js";
 
-// Format time ago - FIXED: added 'date' parameter
 function timeAgo(date) {
   const now = new Date();
   const postDate = new Date(date);
@@ -25,7 +24,7 @@ function timeAgo(date) {
   return "just now";
 }
 
-// Calculate reading time - ADDED: this function was missing
+// Calculate reading time 
 function calculateReadingTime(content) {
   const wordsPerMinute = 200;
   const words = content.trim().split(/\s+/).length;
@@ -33,12 +32,12 @@ function calculateReadingTime(content) {
   return `${minutes} min read (${words} words)`;
 }
 
-// FIXED: function name was 'renderPost', should be 'renderPosts'
+
 function renderPosts(posts, status) {
   const container = document.getElementById("posts-container");
   const filteredPosts = posts.filter((post) => post.status === status);
 
-  // FIXED: 'draft' needs quotes
+  
   if (status === 'draft') {
     document.getElementById("draft-count").textContent = filteredPosts.length;
   }
@@ -129,26 +128,26 @@ function renderPosts(posts, status) {
 }
 
 // Toggle menu
-window.toggleMenu = function (event, postId) {
-  event.stopPropagation();
+ window.toggleMenu = function (event, postId) {
+   event.stopPropagation();
 
-  // Close all other menus
-  document.querySelectorAll('[id^="menu-"]').forEach((menu) => {
-    if (menu.id !== `menu-${postId}`) {
-      menu.classList.add("hidden");
+   // Close all other menus
+   document.querySelectorAll('[id^="menu-"]').forEach((menu) => {
+     if (menu.id !== `menu-${postId}`) {
+       menu.classList.add("hidden");
     }
-  });
+   });
 
-  const menu = document.getElementById(`menu-${postId}`);
-  menu.classList.toggle("hidden");
-};
+   const menu = document.getElementById(`menu-${postId}`);
+   menu.classList.toggle("hidden");
+ };
 
 // Close menus when clicking outside
-document.addEventListener("click", () => {
-  document.querySelectorAll('[id^="menu-"]').forEach((menu) => {
-    menu.classList.add("hidden");
-  });
-});
+ document.addEventListener("click", () => {
+   document.querySelectorAll('[id^="menu-"]').forEach((menu) => {
+     menu.classList.add("hidden");
+   });
+ });
 
 // Edit post
 window.editPost = function (postId) {
@@ -174,7 +173,6 @@ window.deletePostHandler = async function (postId) {
     alert("Failed to delete story. Please try again.");
   }
 };
-
 
 async function loadPosts() {
   try {

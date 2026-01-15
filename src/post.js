@@ -1,4 +1,9 @@
-import { uploadImage, blogPost, getUser } from "./supabase-config.js";
+import {
+  uploadImage,
+  blogPost,
+  updateData,
+  supabase,
+} from "./supabase-config.js";
 
 //===elements===//
 const uploadCover = document.getElementById("upload-cover");
@@ -7,9 +12,73 @@ const postContent = document.getElementById("post-content");
 const publishBtn = document.getElementById("publishBtn");
 const draftBtn = document.getElementById("draftBtn");
 
-
 //===handle cover images===//
 let imageUrl = null;
+let currentPostId = null;
+
+//load post for editing
+window.addEventListener("DOMContentLoaded", async () => {
+  const url = new URLSearchParams(window.location.search);
+  const postId = url.get("id");
+
+  if (postId) {
+    await editPost(postId);
+  }
+});
+
+async function editPost(postId) {
+  try {
+    console.log("Loading post for editing", postId);
+    postTitle.disabled = true,
+    postContent.disabled = true,
+    postTitle.placeholder = "Loading Post...",
+    postContent.placeholder = "Loading Post...";
+
+    const { data: post, error } = await supabase
+      .from("posts")
+      .select("*")
+      .eq("id", postId)
+      .single();
+
+    if (error) {
+      console.error("Error loading post:", error);
+      alert("Failed to load post. Redirecting...");
+      window.location.href = "post.html";
+      return;
+    }
+
+    console.log('Post loaded:', post);
+
+    currentPostId = postId;
+
+    postTitle.value = post.title || '';
+    postContent.value = post.content || '';
+    imageUrl = post.cover_image || null;
+
+
+    if(post.cover_image){
+      displayImage(post.cover_image);
+    
+  }
+
+    publishBtn.textContent = 'Update & Publish';
+    draftBtn.textContent = 'Update Draft';
+    
+    // Re-enable inputs
+    postTitle.disabled = false;
+    postContent.disabled = false;
+    postTitle.placeholder = "Title";
+    postContent.placeholder = "Tell your story...";
+    
+    console.log('Post loaded successfully');
+  }
+
+  catch (error) {
+
+    console.error('Error in loadPostForEditing:', error);
+    alert('Failed to load post');
+  }
+}
 
 uploadCover.addEventListener("change", async (e) => {
   const file = e.target.files[0];
@@ -96,7 +165,7 @@ export function getCoverImageUrl() {
   return imageUrl;
 }
 
-//===post function
+//===post function====//
 
 async function savePost(status = "draft") {
   try {
@@ -114,10 +183,32 @@ async function savePost(status = "draft") {
       return;
     }
 
+    if (currentPostId) {
+      const updatedPost = await updateData(currentPostId, {
+        title: title,
+        content: content,
+        coverImage: imageUrl,
+        status: status,
+      });
+      console.log("Post updated:", updatedPost);
+      alert("Post updated successfully!");
+    } else {
+      const newPost = await blogPost({
+        title: title,
+        content: content,
+        coverImage: imageUrl,
+        status: status,
+      });
+      console.log("Post created:", newPost);
+      alert("Post saved successfully!");
+    }
+
+    window.location.href = "./stories.html";
+
     const btn = status === " Published " ? publishBtn : draftBtn;
     const text = btn.textContent;
     btn.disabled = true;
-    btn.innerHTML = 'Saving...';
+    btn.innerHTML = "Saving...";
 
     const savedPost = await blogPost({
       title: title,
@@ -135,7 +226,7 @@ async function savePost(status = "draft") {
     );
 
     window.location.href = "./stories.html";
-  } catch(error) {
+  } catch (error) {
     console.error("Error saving post:", error);
     alert(error.message || "Failed to save post. Please try again.");
 
@@ -143,21 +234,19 @@ async function savePost(status = "draft") {
     const btn = status === "published" ? publishBtn : draftBtn;
     btn.disabled = false;
     btn.textContent = status === "published" ? "Publish" : "Save Draft";
-
-  }  
+  }
 }
 
+publishBtn.addEventListener("click", () => savePost("published"));
+draftBtn.addEventListener("click", () => savePost("draft"));
 
- publishBtn.addEventListener("click", () => savePost("published"));
- draftBtn.addEventListener("click", () => savePost("draft"));
+// Warn before leaving with unsaved changes
+window.addEventListener("beforeunload", (e) => {
+  const title = postTitle.value.trim();
+  const content = postContent.value.trim();
 
-// // Warn before leaving with unsaved changes
-// window.addEventListener("beforeunload", (e) => {
-//   const title = postTitle.value.trim();
-//   const content = postContent.value.trim();
-
-//   if (title || content) {
-//     e.preventDefault();
-//     e.returnValue = "";
-//   }
-// });
+  if ((title || content) && !currentPostId) {
+    e.preventDefault();
+    e.returnValue = "";
+  }
+});
