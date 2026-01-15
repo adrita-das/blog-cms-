@@ -1,9 +1,4 @@
-import {
-  uploadImage,
-  blogPost,
-  updateData,
-  supabase,
-} from "./supabase-config.js";
+import {uploadImage,blogPost,updateData,supabase} from "./supabase-config.js";
 
 //===elements===//
 const uploadCover = document.getElementById("upload-cover");
@@ -240,13 +235,3 @@ async function savePost(status = "draft") {
 publishBtn.addEventListener("click", () => savePost("published"));
 draftBtn.addEventListener("click", () => savePost("draft"));
 
-// Warn before leaving with unsaved changes
-window.addEventListener("beforeunload", (e) => {
-  const title = postTitle.value.trim();
-  const content = postContent.value.trim();
-
-  if ((title || content) && !currentPostId) {
-    e.preventDefault();
-    e.returnValue = "";
-  }
-});
