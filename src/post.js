@@ -1,4 +1,4 @@
-import {uploadImage,blogPost,updateData,supabase} from "./supabase-config.js";
+import {uploadImage,blogPost,updateData,publishPost,getAllPost,supabase} from "./supabase-config.js";
 
 //===elements===//
 const uploadCover = document.getElementById("upload-cover");
@@ -130,7 +130,7 @@ function displayImage(url) {
   preview.appendChild(removeBtn);
 
   const uploadParent =
-    uploadCover.closest(".mb-8") || uploadCover.parentElement;
+  uploadCover.closest(".mb-8") || uploadCover.parentElement;
   uploadParent.appendChild(preview);
 }
 // Loading state functions
@@ -187,6 +187,14 @@ async function savePost(status = "draft") {
       });
       console.log("Post updated:", updatedPost);
       alert("Post updated successfully!");
+
+
+      if(status === "draft") {
+        alert("Post in Draft")
+      }
+      else{
+        alert("Post Published successfully");
+      }
     } else {
       const newPost = await blogPost({
         title: title,
@@ -195,12 +203,27 @@ async function savePost(status = "draft") {
         status: status,
       });
       console.log("Post created:", newPost);
-      alert("Post saved successfully!");
+      //alert("Post saved successfully!");
+
+      if (status === "draft") {
+        alert("Draft saved successfully!");
+      } else {
+        alert("Post published successfully!");
+      }
     }
 
-    window.location.href = "./stories.html";
+    if(status === "draft"){
+
+      window.location.href = "./stories.html"
+
+    }
+    else{
+
+      window.location.href = "./profile.html"
+    }
 
     const btn = status === " Published " ? publishBtn : draftBtn;
+    //const btn = status === "Draft" ? draftBtn;
     const text = btn.textContent;
     btn.disabled = true;
     btn.innerHTML = "Saving...";
@@ -214,13 +237,12 @@ async function savePost(status = "draft") {
 
     console.log("Post saved:", savedPost);
 
-    alert(
-      status === "published"
-        ? "Post published successfully!"
-        : "Draft saved successfully!"
-    );
-
-    window.location.href = "./stories.html";
+   alert(
+       status === "published"
+         ? "Post published successfully!"
+         : "Draft saved successfully!"
+   );
+  
   } catch (error) {
     console.error("Error saving post:", error);
     alert(error.message || "Failed to save post. Please try again.");
@@ -234,4 +256,6 @@ async function savePost(status = "draft") {
 
 publishBtn.addEventListener("click", () => savePost("published"));
 draftBtn.addEventListener("click", () => savePost("draft"));
+
+
 

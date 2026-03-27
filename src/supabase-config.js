@@ -90,9 +90,9 @@ export async function blogPost(postData) {
       error: userError,
     } = await supabase.auth.getUser();
 
-    if (userError || !user) {
-      throw new Error("User not authenticated. Please sign in.");
-    }
+    // if (userError || !user) {
+    //   throw new Error("User not authenticated. Please sign in.");
+    // }
 
     if (!postData.title || !postData.title.trim()) {
       throw new Error("Title is required");
@@ -157,10 +157,39 @@ export async function getUserPosts(status = null) {
     }
 
     return data;
-  } catch {
+  } catch (error) {
     console.error("Error fetching posts:", error);
     throw error;
   }
+}
+
+export async function getAllPost() {
+
+  try{
+    const {data, error} = await supabase
+     .from("posts")
+     .select(`
+      *,
+      profiles: author_id(
+      username,
+      avatar_url)
+      `)
+      .eq("status", "published")
+      .order("created_at" , { ascending: false});
+
+    if(error) {
+      
+      throw error;
+    }
+    
+    return data;
+  } catch(error) {
+
+    console.error("Error fetching published posts:", error);
+    throw error;
+
+  }
+  
 }
 
 export async function deletePost(postId) {
@@ -208,12 +237,38 @@ export async function updateData(postId, postData) {
 
     return data[0];
   } 
-  catch{
+  catch (error) {
 
     console.error("Error updating post:", error);
     throw error;
 
   }
 }
+
+ export async function publishPost(postId) {
+
+  try{
+    const {data, error} = await supabase
+     .from("posts")
+     .update({
+      status: "published",
+      updated_at: new Date().toISOString(),
+     })
+     .eq("id" , postId)
+     .select();
+
+     if(error) {
+      throw error;
+     }
+
+     return data[0];
+  }
+
+  catch(error) {
+    console.error("Error publishing post :" , error);
+    throw error;
+  }
+
+ }
 
 

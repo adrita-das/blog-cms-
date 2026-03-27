@@ -1,36 +1,8 @@
-import { supabase, getUserPosts, deletePost, updateData} from "./supabase-config.js";
-
-function timeAgo(date) {
-  const now = new Date();
-  const postDate = new Date(date);
-  const sec = Math.floor((now - postDate) / 1000);
-
-  const intervals = {
-    year: 31536000,
-    month: 2592000,
-    week: 604800,
-    day: 86400,
-    hour: 3600,
-    minute: 60,
-  };
-
-  for (const [unit, secondsInUnit] of Object.entries(intervals)) {
-    const interval = Math.floor(sec / secondsInUnit);
-    if (interval >= 1) {
-      return `${interval} ${unit}${interval === 1 ? "" : "s"} ago`;
-    }
-  }
-
-  return "just now";
-}
-
-// Calculate reading time 
-function calculateReadingTime(content) {
-  const wordsPerMinute = 200;
-  const words = content.trim().split(/\s+/).length;
-  const minutes = Math.ceil(words / wordsPerMinute);
-  return `${minutes} min read (${words} words)`;
-}
+import { supabase, getUserPosts, deletePost, updateData } from "./supabase-config.js";
+import {
+  timeAgo,
+  readingTime
+} from './utils.js'
 
 
 function renderPosts(posts, status) {
@@ -82,18 +54,20 @@ function renderPosts(posts, status) {
               ${post.title || "Untitled story"}
             </h3>
             <p class="text-sm text-gray-600">
-              ${calculateReadingTime(post.content)} · Updated ${timeAgo(post.updated_at)}
+              ${readingTime(post.content)} · Updated ${timeAgo(post.updated_at)}
             </p>
           </div>
         </div>
       </div>
       
       <!-- Publication Column -->
+
       <div class="col-span-3 flex items-center">
         <span class="text-sm text-gray-600">PUCC BLOG</span>
       </div>
       
       <!-- Status Column -->
+
       <div class="col-span-3 flex items-center justify-between">
         <span class="text-sm text-gray-600 capitalize">${post.status}</span>
         <div class="relative">
@@ -251,4 +225,4 @@ async function initializeUser() {
 
 // Initialize
 initializeUser();
-loadPosts(); // FIXED: was calling loadPost() instead of loadPosts()
+loadPosts(); 
