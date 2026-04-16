@@ -1,6 +1,6 @@
 //==== user profile====//
 
-import { getUser, supabase } from "./supabase-config.js";  
+import { getUser, getUserPosts, supabase } from "./supabase-config.js";  
 import {
   timeAgo,
   readingTime,
@@ -64,6 +64,7 @@ async function publishedPost() {
       .order("created_at", { ascending: false });
 
     if (error) throw error;
+    console.log("Fetched posts:", posts);
 
     return posts || [];
   } catch (error) {
@@ -104,21 +105,29 @@ async function displayPublishPost() {
     return;
   }
 
+ 
+
   feed.innerHTML = posts
     .map((post) => {
-      const authorColor = getProfile(post.author_id);
-      const authorInitial = getInitial(post.author_id);
+      // Extract username from email
+
+      const authorEmail = post.author_email ?? 'unknown@blog.com';
       
+      const username = authorEmail.split('@')[0];
+      const displayName = `@${username}`; 
+    
+      const authorColor = getProfile(authorEmail);
+      const authorInitial = getInitial(authorEmail);
       
       return `
-      <article class="bg-white rounded-lg shadow-sm hover:shadow-md transition p-6 mb-6">
+      <article class="bg-orange-50 border-2 border-amber-100 rounded-lg shadow-sm hover:shadow-md transition p-6 mb-6">
         <!-- Author Info -->
         <div class="flex items-center gap-3 mb-4">
           <div class="w-10 h-10 rounded-full ${authorColor} flex items-center justify-center text-white font-semibold">
             ${authorInitial}
           </div>
-          <div>
-            <p class="font-medium text-sm">Blog Author</p>
+          <div class="flex-1">
+            <p class="font-medium text-sm text-gray-900">${displayName}</p>
             <p class="text-xs text-gray-500">${timeAgo(post.created_at)}</p>
           </div>
         </div>
@@ -126,14 +135,17 @@ async function displayPublishPost() {
         <!-- Post Content -->
         <div class="flex gap-6">
           <div class="flex-1">
-            <h2 class="text-2xl font-bold mb-2 hover:text-green-600 cursor-pointer">
+            <h2 class="text-2xl font-bold mb-2 text-gray-900 hover:text-green-600 transition">
               ${post.title}
             </h2>
-            <p class="text-gray-600 mb-4" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+            <p class="text-gray-600 mb-4 leading-relaxed" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
               ${post.content.substring(0, 200)}${post.content.length > 200 ? "..." : ""}
             </p>
             <div class="flex items-center gap-4 text-sm text-gray-500">
-              <span>${readingTime(post.content)}</span>
+              <span class="flex items-center gap-1">
+                <i class="far fa-clock"></i>
+                ${readingTime(post.content)}
+              </span>
               <span>·</span>
               <span>${new Date(post.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
             </div>
@@ -142,7 +154,7 @@ async function displayPublishPost() {
           <!-- Cover Image -->
           ${post.cover_image
             ? `
-            <div class="w-40 h-32 flex shrink-0">
+            <div class="w-40 h-32 flex-0">
               <img 
                 src="${post.cover_image}" 
                 alt="Cover" 
@@ -158,7 +170,6 @@ async function displayPublishPost() {
     })
     .join("");
 }
-
 // Initialize
 initProfile();
 displayPublishPost();

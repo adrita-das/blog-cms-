@@ -14,50 +14,59 @@
       rel="stylesheet"
     />
 
-    <title>blog_cms</title>
+    <title>PUCC Blog</title>
   </head>
 
-  <body class="bg-amber-50">
-    <nav class="border-b border-black sticky top-0 z-50">
-      <div class="h-20 flex justify-between items-center px-4">
-        <!-- Left Side -->
+  <body class="bg-amber-50 text-gray-900">
+
+    <!-- Navbar -->
+    <nav
+      class="fixed top-0 left-0 w-full h-20 backdrop-blur-md border-b border-gray-200 z-50"
+    >
+      <div class="max-w-7xl mx-auto h-full px-6 flex items-center justify-between">
+
+        <!-- Logo -->
         <div class="flex items-center gap-4">
-          <h1 class="text-2xl font-mono">PUCC<br />BLOG</h1>
+          <h1 class="text-2xl font-bold tracking-tight leading-5">
+            PUCC <br />
+            <span class="text-gray-500 text-lg font-medium">BLOG</span>
+          </h1>
         </div>
 
-        <!-- Right Side -->
+        <!-- Right -->
         <div class="flex items-center gap-6">
-          <!-- Write Button -->
+
+          <!-- Write -->
           <a
             href="post.html"
-            class="flex items-center gap-1.5 text-gray-700 hover:text-gray-900 transition"
+            class="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-black transition"
           >
+            <i class="fa-regular fa-pen-to-square text-lg"></i>
             Write
-            <i class="fa-regular fa-pen-to-square text-xl"></i>
           </a>
 
           <!-- Profile -->
           <div class="relative">
             <button
               id="profileBtn"
-              class="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold hover:opacity-90 transition"
+              class="w-10 h-10 rounded-full bg-violet-600 text-white font-semibold flex items-center justify-center hover:scale-105 transition"
             >
               <span id="userInitial"></span>
             </button>
 
-            <!-- Profile Dropdown -->
+            <!-- Dropdown -->
             <div
               id="profileMenu"
-              class="hidden absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2"
+              class="hidden absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2"
             >
-              <div class="px-4 py-3 border-b border-gray-200">
+              <div class="px-4 py-3 border-b border-gray-100">
                 <p id="userEmail" class="font-semibold text-sm"></p>
                 <p id="username" class="text-xs text-gray-500 mt-1"></p>
               </div>
 
               <a
                 href="#"
-                class="w-full px-4 py-2 hover:bg-gray-50 flex items-center gap-3 text-sm"
+                class="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-50"
               >
                 <i class="fas fa-user w-4"></i>
                 Profile
@@ -65,7 +74,7 @@
 
               <a
                 href="#"
-                class="w-full px-4 py-2 hover:bg-gray-50 flex items-center gap-3 text-sm"
+                class="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-50"
               >
                 <i class="fas fa-bookmark w-4"></i>
                 Library
@@ -73,7 +82,7 @@
 
               <a
                 href="stories.html"
-                class="w-full px-4 py-2 hover:bg-gray-50 flex items-center gap-3 text-sm"
+                class="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-50"
               >
                 <i class="fas fa-file-alt w-4"></i>
                 Stories
@@ -81,39 +90,89 @@
 
               <a
                 href="#"
-                class="w-full px-4 py-2 hover:bg-gray-50 flex items-center gap-3 text-sm"
+                class="flex items-center gap-3 px-4 py-2 text-sm hover:bg-gray-50"
               >
                 <i class="fas fa-chart-bar w-4"></i>
                 Stats
               </a>
 
-              <div class="border-t border-gray-200 mt-2 pt-2">
-                <button
-                  id="signOutBtn"
-                  class="w-full px-4 py-2 hover:bg-gray-50 flex items-center gap-3 text-sm text-red-600"
+              <div class="border-t border-gray-100 mt-2 pt-2">
+                <a
+                  href="index.html"
+                  class="flex items-center gap-3 px-4 py-2 text-sm text-red-500 hover:bg-red-50"
                 >
-                  <a href="index.html">
-                    <i class="fas fa-sign-out-alt w-4"></i>
-                    Sign out
-                  </a>
-                </button>
+                  <i class="fas fa-sign-out-alt w-4"></i>
+                  Sign out
+                </a>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 py-8">
-      <h1 class="text-4xl font-bold mb-8">Published Posts</h1>
+    <!-- Main -->
+    <main class="max-w-7xl mx-auto px-6 pt-32 pb-20">
 
-      <!-- Posts Feed -->
-      <div id="posts-feed">
-        <!-- Posts will be loaded here by JavaScript -->
-      </div>
+      <!-- Hero -->
+      <section class="mb-14">
+        <h1 class="text-5xl font-bold tracking-tight mb-3">
+          Published Posts
+        </h1>
+
+        <p class="text-gray-500 text-lg">
+          Read ideas, stories and updates from the community.
+        </p>
+      </section>
+
+      <!-- Layout -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+        <!-- Left Feed -->
+        <div class="lg:col-span-8">
+
+          <div id="posts-feed" class="space-y-6">
+            <!-- Posts Load Here -->
+          </div>
+
+        </div>
+
+        <!-- Right Sidebar -->
+        <aside class="lg:col-span-4 space-y-6">
+
+          <!-- Card -->
+          <div class="bg-orange-50 rounded-2xl p-6 border-2 border-amber-100 shadow-sm">
+            <h3 class="font-semibold text-lg mb-3">About PUCC Blog</h3>
+            <p class="text-sm text-gray-500 leading-6">
+            </p>
+          </div>
+
+          <!-- Card -->
+          <div class="bg-orange-50 rounded-2xl p-6 border-2 border-amber-100 shadow-sm">
+            <h3 class="font-semibold text-lg mb-3">Quick Links</h3>
+
+            <div class="space-y-3 text-sm">
+              <a href="post.html" class="block hover:text-black text-gray-600">
+                Write a Post
+              </a>
+
+              <a href="stories.html" class="block hover:text-black text-gray-600">
+                My Stories
+              </a>
+
+              <a href="#" class="block hover:text-black text-gray-600">
+                Reading List
+              </a>
+            </div>
+          </div>
+
+        </aside>
+
+      </section>
     </main>
 
     <script type="module" src="/src/profile.js"></script>
+
   </body>
 </html>

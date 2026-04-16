@@ -107,6 +107,7 @@ export async function blogPost(postData) {
       .insert([
         {
           author_id: user.id,
+          author_email:user.email, //display user name 
           title: postData.title.trim(),
           content: postData.content.trim(),
           cover_image: postData.coverImage || null,
