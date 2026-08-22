@@ -228,13 +228,6 @@ async function savePost(status = "draft") {
     btn.disabled = true;
     btn.innerHTML = "Saving...";
 
-    const savedPost = await blogPost({
-      title: title,
-      content: content,
-      coverImage: imageUrl,
-      status: status,
-    });
-
     console.log("Post saved:", savedPost);
 
    alert(

@@ -1,5 +1,5 @@
 // ===== admin.js =====
-import { getUser, supabase } from "./supabase-config.js";
+import { getUser, supabase} from "./supabase-config.js";
 
 let allPosts = [];
 let postToDelete = null;

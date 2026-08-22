@@ -120,7 +120,7 @@ async function displayPublishPost() {
       const authorInitial = getInitial(authorEmail);
       
       return `
-      <article class="bg-orange-50 border-2 border-amber-100 rounded-lg shadow-sm hover:shadow-md transition p-6 mb-6">
+      <article onclick="openPost('${post.id}')" class="bg-orange-50 border-2 border-amber-100 rounded-lg shadow-sm hover:shadow-md transition p-6 mb-6 cursor-pointer">
         <!-- Author Info -->
         <div class="flex items-center gap-3 mb-4">
           <div class="w-10 h-10 rounded-full ${authorColor} flex items-center justify-center text-white font-semibold">
@@ -173,3 +173,7 @@ async function displayPublishPost() {
 // Initialize
 initProfile();
 displayPublishPost();
+
+window.openPost = function(postId) {
+  window.location.href = `read.html?id=${postId}`;
+};

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind -->
+  <link href="/src/tailwind.css" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    rel="stylesheet"
+  />
+
+  <title>Read Post | PUCC BLOG</title>
+</head>
+
+<body class="bg-amber-50 text-gray-900">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 left-0 w-full h-16 bg-amber-50 backdrop-blur-md border-b border-gray-200 z-50 shadow-sm">
+    <div class="max-w-6xl mx-auto h-full px-6 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="profile.html" class="font-bold text-xl tracking-tight">
+        PUCC BLOG
+      </a>
+
+      <!-- Back -->
+      <a
+        href="profile.html"
+        class="text-sm text-gray-600 hover:text-black transition flex items-center gap-2"
+      >
+        <i class="fas fa-arrow-left"></i>
+        Back
+      </a>
+
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="pt-28 pb-24 px-6">
+
+    <article class="max-w-3xl mx-auto">
+
+      <!-- Loading -->
+      <div id="loadingState" class="text-center py-20">
+        <i class="fas fa-spinner fa-spin text-3xl text-gray-400"></i>
+        <p class="mt-4 text-gray-500">Loading article...</p>
+      </div>
+
+      <!-- Post -->
+      <div id="postWrapper" class="hidden">
+
+        <!-- Author -->
+        <div class="flex items-center gap-3 mb-8 border-b border-gray-200 pb-6">
+
+          <div
+            id="authorAvatar"
+            class="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-semibold text-sm"
+          >
+            A
+          </div>
+
+          <div>
+            <p id="authorName" class="font-medium text-sm text-gray-900">@author</p>
+            <p id="postMeta" class="text-xs text-gray-500">Apr 15 · 4 min read</p>
+          </div>
+
+        </div>
+
+        <!-- Title -->
+        <h1
+          id="postTitle"
+          class="text-5xl leading-tight font-bold tracking-tight mb-8"
+        >
+          Loading title...
+        </h1>
+
+        <!-- Cover -->
+        <div
+          id="coverWrap"
+          class="hidden mb-10 rounded-3xl overflow-hidden border border-gray-200"
+        >
+          <img
+            id="coverImage"
+            class="w-full max-h-[500px] object-cover"
+            alt="Cover image"
+          />
+        </div>
+
+        <!-- Content -->
+        <div
+          id="postContent"
+          class="text-lg leading-8 text-gray-800 whitespace-pre-line"
+        ></div>
+
+      </div>
+
+      <!-- Not Found -->
+      <div id="notFound" class="hidden text-center py-20">
+        <i class="fas fa-file-circle-xmark text-5xl text-gray-300 mb-5"></i>
+
+        <h2 class="text-2xl font-bold mb-2">Post not found</h2>
+
+        <p class="text-gray-500 mb-6">
+          This article may be removed or unpublished.
+        </p>
+
+        <a
+          href="profile.html"
+          class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-black text-white hover:opacity-90 transition"
+        >
+          <i class="fas fa-arrow-left"></i>
+          Go Back
+        </a>
+      </div>
+
+    </article>
+
+  </main>
+
+  <!-- Script -->
+  <script type="module">
+    import { supabase } from "/src/supabase-config.js";
+    import {
+      getProfile,
+      getInitial
+    } from "/src/utils.js";
+
+    function readingTime(text = "") {
+      const words = text.trim().split(/\s+/).length;
+      const mins = Math.max(1, Math.ceil(words / 200));
+      return `${mins} min read`;
+    }
+
+    function timeAgo(dateString) {
+      const now = new Date();
+      const date = new Date(dateString);
+      const diff = Math.floor((now - date) / 1000);
+
+      const days = Math.floor(diff / 86400);
+      if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+
+      const hrs = Math.floor(diff / 3600);
+      if (hrs > 0) return `${hrs} hour${hrs > 1 ? "s" : ""} ago`;
+
+      const mins = Math.floor(diff / 60);
+      if (mins > 0) return `${mins} min ago`;
+
+      return "Just now";
+    }
+
+    async function loadPost() {
+      const params = new URLSearchParams(window.location.search);
+      const postId = params.get("id");
+
+      if (!postId) {
+        showNotFound();
+        return;
+      }
+
+      const { data: post, error } = await supabase
+        .from("posts")
+        .select("*")
+        .eq("id", postId)
+        .eq("status", "published")
+        .single();
+
+      if (error || !post) {
+        showNotFound();
+        return;
+      }
+
+      renderPost(post);
+    }
+
+    function renderPost(post) {
+      document.getElementById("loadingState").classList.add("hidden");
+      document.getElementById("postWrapper").classList.remove("hidden");
+
+      const email = post.author_email || "user@blog.com";
+      const username = email.split("@")[0];
+
+      const avatar = document.getElementById("authorAvatar");
+      avatar.textContent = getInitial(email);
+      avatar.className =
+        `w-10 h-10 rounded-full ${getProfile(email)} text-white flex items-center justify-center font-semibold text-sm`;
+
+      document.getElementById("authorName").textContent = `@${username}`;
+
+      document.getElementById("postMeta").textContent =
+        `${timeAgo(post.created_at)} · ${readingTime(post.content)}`;
+
+      document.getElementById("postTitle").textContent = post.title;
+
+      document.getElementById("postContent").textContent = post.content;
+
+      if (post.cover_image) {
+        document.getElementById("coverWrap").classList.remove("hidden");
+        document.getElementById("coverImage").src = post.cover_image;
+      }
+
+      document.title = `${post.title} | PUCC BLOG`;
+    }
+
+    function showNotFound() {
+      document.getElementById("loadingState").classList.add("hidden");
+      document.getElementById("notFound").classList.remove("hidden");
+    }
+
+    loadPost();
+  </script>
+
+</body>
+</html>
