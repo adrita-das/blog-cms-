@@ -54,7 +54,10 @@
           >
             SignIn
           </button>
-          <p id="signInError" class="text-red-600 text-sm hidden"></p>
+          <p id="signInError" class="text-red-600 text-sm hidden">Please Try Again!</p>
+          <button type="button" id="forgotPasswordLink" class="text-sm text-blue-600 underline cursor-pointer">
+            Forgot Password?
+          </button>
         </form>
 
         <!---sign up form-->
@@ -74,8 +77,6 @@
               type="password" id="signUpPassword"
               class="w-full border-2 border-black rounded-md px-2"
             />
-
-
           </div>
 
           <button
@@ -88,8 +89,33 @@
           <p id="signUpError" class="text-red-600 text-sm hidden"></p>
           <p id="signUpSuccess" class="text-green-600 text-sm hidden"></p>
         </form>
+
+        <!--forgot password form-->
+
+        <form class="space-y-4 hidden" id="forgotPasswordForm">
+          <h2 class="text-bold text-xl">Reset Your Password</h2>
+
+          <div class="space-y-4">
+            <label class="text-sm font-semibold font-sans">Email</label>
+            <input
+              type="email" id="forgotPasswordEmail"
+              class="w-full border-2 border-black rounded-md px-2"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="flex-1 bg-black text-white text-sm p-2 m-2 rounded-md cursor-pointer"
+            id="sendResetBtn"
+          >
+            Send Reset Link
+          </button>
+          <p id="forgotPasswordError" class="text-red-600 text-sm hidden"></p>
+          <p id="forgotPasswordSuccess" class="text-green-600 text-sm hidden"></p>
+        </form>
       </div>
     </main>
     <script type="module" src="/src/auth.js"></script>
+    <!-- <script type="module" src="/src/jwt.js"></script>  -->
   </body>
 </html>
