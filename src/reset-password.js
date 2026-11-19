@@ -87,7 +87,7 @@ function showResetPasswordForm() {
         const update_password_success = document.getElementById('updatePasswordSuccess')
 
 
-        // const { data, error } = await updatePassword(newPassword,`${window.location.origin}/auth.html`)
+        const { data, error } = await updatePassword(newPassword)
         
         if (error) {
             update_password_error.textContent = error.message
