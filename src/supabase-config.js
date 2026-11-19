@@ -26,6 +26,7 @@ export async function signOut() {
   return { error };
 }
 
+
 export async function getUser() {
   const {
     data: { user },
@@ -33,6 +34,24 @@ export async function getUser() {
   return user;
 }
 
+export async function resetPassword(email, redirectTo) {
+
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo,
+
+  });
+  return { data, error };
+}
+
+
+
+export async function updatePassword(newPassword) {
+
+  const { data, error } = await supabase.auth.updateUser({ password: newPassword });
+
+  return { data, error };
+  
+}
 
 //=======cover image ========//
 
