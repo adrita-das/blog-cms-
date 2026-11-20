@@ -1,4 +1,4 @@
-A full-stack blog CMS where users can sign up, write stories, save drafts, publish posts, and read what the community has written. It also includes an admin panel for managing posts and users.
+PUCC Blog is a content management system for a student organization, with a public blog feed and a secure admin panel for managing posts and users.
  
 **Live demo:** https://exquisite-pika-2f9841.netlify.app/
  
