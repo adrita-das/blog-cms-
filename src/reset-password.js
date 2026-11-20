@@ -13,7 +13,7 @@ signInBtn.addEventListener('click', () => showForm(signInForm))
 signUpBtn.addEventListener('click',() =>showForm(signUpForm))
 
 function showForm(formToShow) {
-    const allForms = [signInForm, signUpForm]
+    const allForms = [signInForm, signUpForm, forgotPasswordForm]
     allForms.forEach(f => f.classList.add('hidden'))
     formToShow.classList.remove('hidden')
 
